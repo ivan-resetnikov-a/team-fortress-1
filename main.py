@@ -3,6 +3,8 @@ pg.mixer.init()
 pg.font.init()
 pg.init()
 
+import core
+
 font = pg.font.Font('assets/fonts/pixeloid.ttf', 9)
 
 
@@ -23,6 +25,7 @@ class TF1 :
 
 
 	def run (self) :
+		self.onStart()
 		self.runnning = True
 
 		while self.runnning :
@@ -47,12 +50,20 @@ class TF1 :
 		self.frame.fill((0, 0, 0))
 
 		# render
+		[player.render(self.frame) for player in self.players]
+
 		self.frame.blit(font.render(str(round(self.clock.get_fps())), 0, (255, 255, 255)), (0, 0))
 
 		# apply buffer
 		self.window.blit(pg.transform.scale(self.frame, self.windowSize), (0, 0))
 		self.clock.tick(self.fps)
 		pg.display.flip()
+
+
+	def onStart (self) :
+		self.players = []
+
+		self.players.append(core.Player('solider', 'red'))
 
 
 
